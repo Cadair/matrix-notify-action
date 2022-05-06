@@ -58,7 +58,7 @@ async function generateReactions(completedJobs) {
             reactions.push(reaction);
         });
 
-    core.info(util.inspect(reactions));
+    return reactions;
 }
 
 async function sendMatrixNotification() {
