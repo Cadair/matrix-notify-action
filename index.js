@@ -42,7 +42,11 @@ async function gatherPreviousJobStatus() {
     const allConclusions = completedJobs.map(job => job.conclusion);
     core.info(allConclusions);
 
-    return allConclusions.every(conclusion => conclusion === "success");
+    let status = "Failed";
+    if (allConclusions.every(conclusion => conclusion === "success")) {
+        status = "Succeeded";
+    }
+    return status;
 
 }
 
