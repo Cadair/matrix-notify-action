@@ -74,6 +74,7 @@ async function sendMatrixNotification() {
     eventId = await client.sendHtmlNotice(roomId, generateNoticeHtml(status));
     core.setOutput("eventId", eventId);
 
+    // Send all the reactions in parallel
     await Promise.map(
         reactions,
         reaction => client.unstableApis.addReactionToEvent(roomId, eventId, reaction)
