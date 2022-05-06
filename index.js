@@ -31,11 +31,13 @@ async function gatherPreviousJobStatus() {
                                                                         filter:'latest'});
 
     core.info(util.inspect(workflow, colors=true, depth=null));
-    const currentJob = workflow.data.jobs.find(
-        job => job.name === context.job
-    );
-    core.info(util.inspect(currentJob, colors=true, depth=null));
+    core.info("\n\n\n");
 
+    const completedJobs = workflow.data.jobs.filter(
+        job => job.completed_at != null
+    );
+
+    core.info(util.inspect(completedJobs, colors=true, depth=null));
 
 }
 
