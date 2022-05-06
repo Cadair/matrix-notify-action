@@ -1,0 +1,25 @@
+name: 'Matrix Notify'
+description: 'Send a matrix notification'
+branding:
+  icon: message-square
+  color: yellow
+inputs:
+  status:
+    description: Status to report (either 'Succeeded' or 'Failed')
+    required: true
+  token:
+    description: Access token for Matrix bot account
+    required: true
+  roomid:
+    description: Matrix room ID to send message to (default is SunPy Development room)
+    required: true
+  homeserver:
+    description: Matrix homeserver
+    required: false
+    default: 'https://matrix.org'
+outputs:
+  eventid: # id of output
+    description: 'The matrix event ID of the sent message.'
+runs:
+  using: 'node16'
+  main: 'index.js'

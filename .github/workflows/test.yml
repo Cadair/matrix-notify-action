@@ -1,0 +1,17 @@
+name: Test Matrix
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./
+        with:
+          status: Succeeded
+          token: ${{ secrets.matrix_access_token }}
+          homeserver: 'https://matrix.cadair.com'
+          roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
