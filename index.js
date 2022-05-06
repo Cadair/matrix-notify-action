@@ -3,10 +3,9 @@ const core = require('@actions/core');
 const matrix = require('matrix-bot-sdk');
 
 function generateNoticeHtml(status) {
+    let colour = "#ff0000";
     if (status == "Succeeded") {
-        const colour = "#00ff00";
-    } else {
-        const colour = "#ff0000";
+        let colour = "#00ff00";
     }
 
     const timestamp = new Date().toUTCString();
