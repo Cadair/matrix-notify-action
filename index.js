@@ -20,7 +20,16 @@ function generateNoticeHtml(status) {
 
 }
 
+function gatherPreviousJobStatus() {
+    const context = github.context;
+    const octokit = github.getOctokit();
+
+    const workflow = octokit.rest.getWorkflowRun({...context.repo, run_id: context.runId});
+    core.info(workflow.toString());
+}
+
 try {
+    gatherPreviousJobStatus();
     const status = core.getInput("status");
     const matrixToken = core.getInput("token");
     const roomId = core.getInput("roomid");

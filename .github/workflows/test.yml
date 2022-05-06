@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  matrix:
+  pass:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,6 +15,24 @@ jobs:
         id: message
         with:
           status: Succeeded
+          token: ${{ secrets.matrix_access_token }}
+          homeserver: 'https://matrix.cadair.com'
+          roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
+
+      - name: Print the event ID
+        run: echo "Sent Matrix Event '${{ steps.message.outputs.eventId }}'"
+
+  fail:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: exit 1
+
+      - uses: ./
+        id: message
+        with:
+          status: Failed
           token: ${{ secrets.matrix_access_token }}
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
