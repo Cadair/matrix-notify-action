@@ -25,8 +25,8 @@ async function gatherPreviousJobStatus() {
     const context = github.context;
     const octokit = github.getOctokit(githubToken);
 
-    const workflow = await octokit.rest.actions.getWorkflowRun({...context.repo, run_id: context.runId});
-    core.info(JSON.stringify(workflow));
+    const workflow = await octokit.rest.actions.listJobsForWorkflowRun({...context.repo, run_id: context.runId, filter:'latest'});
+    core.info(JSON.stringify(workflow, null, 4));
 }
 
 try {
