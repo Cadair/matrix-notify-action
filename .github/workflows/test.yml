@@ -36,7 +36,6 @@ jobs:
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
           ignore_pattern: '.*long.*'
       - uses: ./
-        id: message
         with:
           matrix_token: ${{ secrets.matrix_access_token }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
