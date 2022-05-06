@@ -50,7 +50,7 @@ Other Configuration Options
 If you do not wish to post reactions for all of the jobs executed by the
 workflow you can specify a regular expression which is an ignore pattern,
 matched against the name.
-To enable this add the following to the `with:` block
+To enable this add something similar to the following to the `with:` block
 
 
 ```yaml
