@@ -1,7 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-
-import { MatrixClient } from "matrix-bot-sdk";
+const matrix = require('matrix-bot-sdk');
 
 try {
     const status = core.getInput("status");
@@ -9,7 +8,7 @@ try {
     const roomId = core.getInput("roomid");
     const homeserverUrl = core.getInput("homeserver");
 
-    const client = MatrixClient(homeserverUrl, matrixToken);
+    const client = matrix.MatrixClient(homeserverUrl, matrixToken);
     const eventId = await client.sendNotice(roomId, "Hello world");
 
     core.setOutput(eventId);
