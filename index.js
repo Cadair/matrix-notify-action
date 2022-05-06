@@ -39,6 +39,9 @@ async function gatherPreviousJobStatus() {
 
     core.info(util.inspect(completedJobs, colors=true, depth=null));
 
+    const allConclusions = completedJobs.map(job => job.conclusion);
+    core.info(allConclusions);
+
 }
 
 
