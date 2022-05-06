@@ -54,8 +54,9 @@ async function generateReactions(completedJobs) {
     completedJobs.map(
         (job) => {
             const symbol = symbols[job.conclusion] || unknownReact;
-            const name = job.name.split(" / ")[1];
-            const reaction = `${symbol} ${job.name}`;
+            let name = job.name.split(" / ");
+            name = name[name.length - 1];
+            const reaction = `${symbol} ${name}`;
             reactions.push(reaction);
         });
 
