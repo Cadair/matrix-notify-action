@@ -28,7 +28,7 @@ try {
 
     const client = new matrix.MatrixClient(homeserverUrl, matrixToken);
     client.sendHtmlNotice(roomId, generateNoticeHtml(status)).then(
-        (eventId) => core.setOutput(eventId)
+        (eventId) => core.setOutput("eventId", eventId)
     );
 } catch (error) {
     core.setFailed(error.message);
