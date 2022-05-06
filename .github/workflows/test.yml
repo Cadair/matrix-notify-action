@@ -10,9 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: ./
+        id: succeeded
         with:
           status: Succeeded
           token: ${{ secrets.matrix_access_token }}
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
+
+      - name: Print the event ID
+        run: echo "Sent Matrix Event ${{ steps.succeeded.outputs.eventId }}"
