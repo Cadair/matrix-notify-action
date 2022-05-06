@@ -19,6 +19,7 @@ inputs:
     default: 'https://matrix.org'
   ignore_pattern:
     description: A regex to apply to reaction names to ignore certain jobs.
+    required: false
     default: ''
 outputs:
   eventid: # id of output

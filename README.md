@@ -42,3 +42,17 @@ individual jobs.
 The result is something which looks like this:
 
 ![An example message](example.png)
+
+
+Other Configuration Options
+---------------------------
+
+If you do not wish to post reactions for all of the jobs executed by the
+workflow you can specify a regular expression which is an ignore pattern,
+matched against the name.
+To enable this add the following to the `with:` block
+
+
+```yaml
+ignore_pattern: '.*long.*'
+```

@@ -53,6 +53,10 @@ async function generateReactions(completedJobs) {
     const reactions = [];
     completedJobs.map(
         (job) => {
+            // If the job name matches the ignore pattern, then don't push it
+            const re = new RegExp(core.getInput("ignore_pattern"));
+            const skip = re.exec(job.name);
+
             const symbol = symbols[job.conclusion] || unknownReact;
             let name = job.name.split(" / ");
             name = name[name.length - 1];
@@ -62,9 +66,7 @@ async function generateReactions(completedJobs) {
                 reaction = `${reaction} ${count}`;
             }
 
-            // If the job name matches the ignore pattern, then don't push it
-            const re = new RegExp(core.getInput("ignore_pattern"));
-            if (!re.exec(reaction)) {
+            if (!skip) {
                 reactions.push(reaction);
             }
         });
