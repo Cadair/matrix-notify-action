@@ -25,7 +25,6 @@ jobs:
       - uses: ./
         id: message
         with:
-          status: Dynamic
           matrix_token: ${{ secrets.matrix_access_token }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           homeserver: 'https://matrix.cadair.com'

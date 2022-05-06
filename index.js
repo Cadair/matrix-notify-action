@@ -42,21 +42,19 @@ async function gatherPreviousJobStatus() {
     const allConclusions = completedJobs.map(job => job.conclusion);
     core.info(allConclusions);
 
+    return allConclusions.every(conclusion => conclusion === "success");
+
 }
 
-
-try {
-    gatherPreviousJobStatus();
-    const status = core.getInput("status");
+async function sendMatrixNotification() {
+    const status = await gatherPreviousJobStatus();
     const matrixToken = core.getInput("matrix_token");
     const roomId = core.getInput("roomid");
     const homeserverUrl = core.getInput("homeserver");
 
     const client = new matrix.MatrixClient(homeserverUrl, matrixToken);
-    client.sendHtmlNotice(roomId, generateNoticeHtml(status)).then(
-        (eventId) => core.setOutput("eventId", eventId)
-    );
-} catch (error) {
-    core.setFailed(error.message);
+    eventId = await client.sendHtmlNotice(roomId, generateNoticeHtml(status));
+    core.setOutput("eventId", eventId);
 }
 
+sendMatrixNotification().catch(err => core.setFailed(err.message));

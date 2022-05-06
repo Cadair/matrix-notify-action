@@ -4,9 +4,6 @@ branding:
   icon: message-square
   color: yellow
 inputs:
-  status:
-    description: Status to report (either 'Succeeded' or 'Failed')
-    required: true
   matrix_token:
     description: Access token for Matrix bot account
     required: true
