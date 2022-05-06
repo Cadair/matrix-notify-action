@@ -58,7 +58,7 @@ async function generateReactions(completedJobs) {
             name = name[name.length - 1];
             let reaction = `${symbol} ${name}`;
             if (reactions.includes(reaction)) {
-                const count = reactions.filter(r => r === reaction).length;
+                const count = reactions.filter(r => r.startsWith(reaction)).length;
                 reaction = `${reaction} ${count}`;
             }
             reactions.push(reaction);
