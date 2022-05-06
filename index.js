@@ -1,6 +1,8 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const matrix = require('matrix-bot-sdk');
+const datefns = require('date-fns');
+
 
 function generateNoticeHtml(status) {
     const context = github.context;
@@ -10,7 +12,7 @@ function generateNoticeHtml(status) {
         colour = "#00ff00";
     }
 
-    const timestamp = new Date().toUTCString();
+    const timestamp = datefns.format(new Date(), 'yyyy-MM-dd HH:mm');
     const branch = `${process.env.GITHUB_REF_NAME}`;
     const buildUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
