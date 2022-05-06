@@ -29,7 +29,14 @@ async function gatherPreviousJobStatus() {
     const workflow = await octokit.rest.actions.listJobsForWorkflowRun({...context.repo,
                                                                         run_id: context.runId,
                                                                         filter:'latest'});
-    core.info(util.inspect(workflow, colors=true, depth=null));
+    core.info(util.inspect(workflow.data.jobs, colors=true, depth=null));
+
+    const currentJob = workflow.data.jobs.filter(
+        (job) => {
+            return job.name === context.job;
+        }
+    );
+    core.info(util.inspect(currentJob, colors=true, depth=null));
 }
 
 
