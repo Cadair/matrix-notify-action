@@ -20,4 +20,4 @@ jobs:
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
 
       - name: Print the event ID
-        run: echo "Sent Matrix Event ${{ steps.message.outputs.eventId }}"
+        run: echo "Sent Matrix Event '${{ steps.message.outputs.eventId }}'"
