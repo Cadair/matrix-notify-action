@@ -14,10 +14,10 @@ function generateNoticeHtml(status) {
     }
 
     const timestamp = datefns.format(new Date(), 'yyyy-MM-dd HH:mm');
-    const branch = `${process.env.GITHUB_REF_NAME}`;
+    const refName = process.env.GITHUB_REF_NAME;
     const buildUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
-    return `GitHub Actions build for ${branch} <font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
+    return `GitHub Actions build for ${refName} <font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
 
 }
 
