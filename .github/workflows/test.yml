@@ -9,31 +9,22 @@ jobs:
   pass:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: ./
-        id: message
-        with:
-          status: Succeeded
-          matrix_token: ${{ secrets.matrix_access_token }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          homeserver: 'https://matrix.cadair.com'
-          roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
-
-      - name: Print the event ID
-        run: echo "Sent Matrix Event '${{ steps.message.outputs.eventId }}'"
+      - run: exit 0
 
   fail:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
       - run: exit 1
 
+  notify:
+    runs-on: ubuntu-latest
+    needs: [pass, fail]
+    steps:
+      - uses: actions/checkout@v3
       - uses: ./
         id: message
         with:
-          status: Failed
+          status: Dynamic
           matrix_token: ${{ secrets.matrix_access_token }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           homeserver: 'https://matrix.cadair.com'
@@ -41,3 +32,4 @@ jobs:
 
       - name: Print the event ID
         run: echo "Sent Matrix Event '${{ steps.message.outputs.eventId }}'"
+

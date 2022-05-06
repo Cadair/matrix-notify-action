@@ -31,9 +31,7 @@ async function gatherPreviousJobStatus() {
                                                                         filter:'latest'});
 
     const currentJob = workflow.data.jobs.find(
-        (job) => {
-            return job.name === context.job;
-        }
+        job => job.name === context.job
     );
     core.info(util.inspect(currentJob, colors=true, depth=null));
 
