@@ -1,16 +1,18 @@
 const core = require('@actions/core');
-// const github = require('@actions/github');
+const github = require('@actions/github');
 const matrix = require('matrix-bot-sdk');
 
 function generateNoticeHtml(status) {
+    const context = github.context;
+
     let colour = "#ff0000";
     if (status === "Succeeded") {
-        let colour = "#00ff00";
+        colour = "#00ff00";
     }
 
     const timestamp = new Date().toUTCString();
     const branch = "branch";
-    const buildUrl = "https://bbc.co.uk";
+    const buildUrl = `${context.serverUrl}/${context.repo}/actions/runs/${context.runId}`;
 
     return `GitHub Actions build for ${branch} <font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
 
