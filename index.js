@@ -47,8 +47,8 @@ async function gatherPreviousJobStatus(completedJobs) {
 }
 
 async function generateReactions(completedJobs) {
-    const unknownReact = "?";
-    const symbols = {success: "yes", failiure: "no"};
+    const unknownReact = "⚪";
+    const symbols = {success: "🟢", failiure: "🔴"};
 
     const reactions = [];
     completedJobs.map(
