@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const matrix = require('matrix-bot-sdk');
 const datefns = require('date-fns');
+const util = require('node:util');
 
 
 function generateNoticeHtml(status) {
