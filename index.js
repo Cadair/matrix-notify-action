@@ -36,8 +36,7 @@ async function getPreviousJobs() {
     return completedJobs;
 }
 
-async function gatherPreviousJobStatus() {
-    const completedJobs = await getPreviousJobs();
+async function gatherPreviousJobStatus(completedJobs) {
     const allConclusions = completedJobs.map(job => job.conclusion);
 
     let status = "Failed";
@@ -47,8 +46,26 @@ async function gatherPreviousJobStatus() {
     return status;
 }
 
+async function generateReactions(completedJobs) {
+    const unknownReact = "";
+    const symbols = {success: "yes", fail: "no"};
+
+    const reactions = [];
+    completedJobs.map(
+        (job) => {
+            const symbol = symbols[job.conclusion] || unknownReact;
+            const reaction = `${symbol} ${job.name}`;
+            reactions.push(reaction);
+        });
+
+    core.info(util.inspect(reactions));
+}
+
 async function sendMatrixNotification() {
-    const status = await gatherPreviousJobStatus();
+    const completedJobs = await getPreviousJobs();
+    const reactions = await generateReactions(completedJobs);
+    const status = await gatherPreviousJobStatus(completedJobs);
+
     const matrixToken = core.getInput("matrix_token");
     const roomId = core.getInput("roomid");
     const homeserverUrl = core.getInput("homeserver");
