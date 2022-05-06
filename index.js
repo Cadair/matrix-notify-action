@@ -47,8 +47,8 @@ async function gatherPreviousJobStatus(completedJobs) {
 }
 
 async function generateReactions(completedJobs) {
-    const unknownReact = "";
-    const symbols = {success: "yes", fail: "no"};
+    const unknownReact = "?";
+    const symbols = {success: "yes", failiure: "no"};
 
     const reactions = [];
     completedJobs.map(
@@ -73,6 +73,10 @@ async function sendMatrixNotification() {
     const client = new matrix.MatrixClient(homeserverUrl, matrixToken);
     eventId = await client.sendHtmlNotice(roomId, generateNoticeHtml(status));
     core.setOutput("eventId", eventId);
+
+    for (reaction of reactions) {
+        await matrix.MatrixClient.unstableApis.addReactionToEvent(roomId, eventId, reaction);
+    }
 }
 
 sendMatrixNotification().catch(err => core.setFailed(err.message));
