@@ -56,7 +56,11 @@ async function generateReactions(completedJobs) {
             const symbol = symbols[job.conclusion] || unknownReact;
             let name = job.name.split(" / ");
             name = name[name.length - 1];
-            const reaction = `${symbol} ${name}`;
+            let reaction = `${symbol} ${name}`;
+            if (reactions.includes(reaction)) {
+                const count = reactions.filter(r => r === reaction).length;
+                reaction = `${reaction} ${count}`;
+            }
             reactions.push(reaction);
         });
 
