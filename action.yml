@@ -17,6 +17,9 @@ inputs:
     description: Matrix homeserver
     required: false
     default: 'https://matrix.org'
+  ignore_pattern:
+    description: A regex to apply to reaction names to ignore certain jobs.
+    default: ''
 outputs:
   eventid: # id of output
     description: 'The matrix event ID of the sent message.'

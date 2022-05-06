@@ -61,7 +61,12 @@ async function generateReactions(completedJobs) {
                 const count = reactions.filter(r => r.startsWith(reaction)).length;
                 reaction = `${reaction} ${count}`;
             }
-            reactions.push(reaction);
+
+            // If the job name matches the ignore pattern, then don't push it
+            const re = new RegExp(core.getInput("ignore_pattern"));
+            if (!re.exec(reaction)) {
+                reactions.push(reaction);
+            }
         });
 
     return reactions;
