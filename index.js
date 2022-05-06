@@ -8,10 +8,10 @@ try {
     const roomId = core.getInput("roomid");
     const homeserverUrl = core.getInput("homeserver");
 
-    const client = matrix.MatrixClient(homeserverUrl, matrixToken);
-    const eventId = await client.sendNotice(roomId, "Hello world");
-
-    core.setOutput(eventId);
+    const client = new matrix.MatrixClient(homeserverUrl, matrixToken);
+    client.sendNotice(roomId, "Hello world").then(
+        (eventId) => core.setOutput(eventId)
+    );
 
 } catch (error) {
     core.setFailed(error.message);
