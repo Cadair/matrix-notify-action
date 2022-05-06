@@ -34,7 +34,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
-          ignore_pattern: '*long*'
+          ignore_pattern: '.*long.*'
 
       - name: Print the event ID
         run: echo "Sent Matrix Event '${{ steps.message.outputs.eventId }}'"
