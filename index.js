@@ -74,7 +74,7 @@ async function sendMatrixNotification() {
     eventId = await client.sendHtmlNotice(roomId, generateNoticeHtml(status));
     core.setOutput("eventId", eventId);
 
-    for (reaction of reactions) {
+    for (let reaction of reactions) {
         await matrix.MatrixClient.unstableApis.addReactionToEvent(roomId, eventId, reaction);
     }
 }
