@@ -21,7 +21,7 @@ function generateNoticeHtml(status) {
 
 }
 
-async function gatherPreviousJobStatus() {
+async function getPreviousJobs() {
     const githubToken = core.getInput("github_token");
     const context = github.context;
     const octokit = github.getOctokit(githubToken);
@@ -30,24 +30,21 @@ async function gatherPreviousJobStatus() {
                                                                         run_id: context.runId,
                                                                         filter:'latest'});
 
-    core.info(util.inspect(workflow, colors=true, depth=null));
-    core.info("\n\n\n");
-
     const completedJobs = workflow.data.jobs.filter(
         job => job.completed_at != null
     );
+    return completedJobs;
+}
 
-    core.info(util.inspect(completedJobs, colors=true, depth=null));
-
+async function gatherPreviousJobStatus() {
+    const completedJobs = await getPreviousJobs();
     const allConclusions = completedJobs.map(job => job.conclusion);
-    core.info(allConclusions);
 
     let status = "Failed";
     if (allConclusions.every(conclusion => conclusion === "success")) {
         status = "Succeeded";
     }
     return status;
-
 }
 
 async function sendMatrixNotification() {
