@@ -12,7 +12,7 @@ function generateNoticeHtml(status) {
 
     const timestamp = new Date().toUTCString();
     const branch = "branch";
-    const buildUrl = `${context.serverUrl}/${context.repo}/actions/runs/${context.runId}`;
+    const buildUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
     return `GitHub Actions build for ${branch} <font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
 
