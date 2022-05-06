@@ -15,7 +15,8 @@ jobs:
         id: message
         with:
           status: Succeeded
-          token: ${{ secrets.matrix_access_token }}
+          matrix_token: ${{ secrets.matrix_access_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
 
@@ -33,7 +34,8 @@ jobs:
         id: message
         with:
           status: Failed
-          token: ${{ secrets.matrix_access_token }}
+          matrix_token: ${{ secrets.matrix_access_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
 

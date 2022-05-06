@@ -7,8 +7,11 @@ inputs:
   status:
     description: Status to report (either 'Succeeded' or 'Failed')
     required: true
-  token:
+  matrix_token:
     description: Access token for Matrix bot account
+    required: true
+  github_token:
+    description: The GitHub token for accessing workflow info
     required: true
   roomid:
     description: Matrix room ID to send message to (default is SunPy Development room)

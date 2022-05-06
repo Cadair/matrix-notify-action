@@ -21,8 +21,9 @@ function generateNoticeHtml(status) {
 }
 
 function gatherPreviousJobStatus() {
+    const githubToken = core.getInput("github_token");
     const context = github.context;
-    const octokit = github.getOctokit();
+    const octokit = github.getOctokit(githubToken);
 
     const workflow = octokit.rest.getWorkflowRun({...context.repo, run_id: context.runId});
     core.info(workflow.toString());
@@ -31,7 +32,7 @@ function gatherPreviousJobStatus() {
 try {
     gatherPreviousJobStatus();
     const status = core.getInput("status");
-    const matrixToken = core.getInput("token");
+    const matrixToken = core.getInput("matrix_token");
     const roomId = core.getInput("roomid");
     const homeserverUrl = core.getInput("homeserver");
 
