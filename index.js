@@ -4,7 +4,7 @@ const matrix = require('matrix-bot-sdk');
 
 function generateNoticeHtml(status) {
     let colour = "#ff0000";
-    if (status == "Succeeded") {
+    if (status === "Succeeded") {
         let colour = "#00ff00";
     }
 
@@ -12,7 +12,7 @@ function generateNoticeHtml(status) {
     const branch = "branch";
     const buildUrl = "https://bbc.co.uk";
 
-    return `GitHub Actions build for ${branch} <font color="${colour}">${status}</font> at <a href='${buildUrl}>${timestamp}</a>`;
+    return `GitHub Actions build for ${branch} <font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
 
 }
 
