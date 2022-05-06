@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "Stuart Mumford",
-  "license": "MIT",
+  "license": "BSD 2-Clause",
   "dependencies": {
     "@actions/core": "^1.8.0",
     "@actions/github": "^5.0.1",
