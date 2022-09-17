@@ -92,7 +92,7 @@ async function sendMatrixNotification() {
     core.setOutput("eventId", eventId);
 
     for (let reaction of reactions) {
-        await wait(1000);
+        await new Promise(r => setTimeout(r, 1000));
         await client.unstableApis.addReactionToEvent(roomId, eventId, reaction);
     }
 }
