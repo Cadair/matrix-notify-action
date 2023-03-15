@@ -27,31 +27,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * If the argument isn't a string, the function cannot parse the string or
  * the values are invalid, it returns Invalid Date.
  *
- * ### v2.0.0 breaking changes:
- *
- * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
- *
- * - The previous `parse` implementation was renamed to `parseISO`.
- *
- *   ```javascript
- *   // Before v2.0.0
- *   parse('2016-01-01')
- *
- *   // v2.0.0 onward
- *   parseISO('2016-01-01')
- *   ```
- *
- * - `parseISO` now validates separate date and time values in ISO-8601 strings
- *   and returns `Invalid Date` if the date is invalid.
- *
- *   ```javascript
- *   parseISO('2018-13-32')
- *   //=> Invalid Date
- *   ```
- *
- * - `parseISO` now doesn't fall back to `new Date` constructor
- *   if it fails to parse a string argument. Instead, it returns `Invalid Date`.
- *
  * @param {String} argument - the value to convert
  * @param {Object} [options] - an object with options.
  * @param {0|1|2} [options.additionalDigits=2] - the additional number of digits in the extended year format
@@ -70,10 +45,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * const result = parseISO('+02014101', { additionalDigits: 1 })
  * //=> Fri Apr 11 2014 00:00:00
  */
-function parseISO(argument, dirtyOptions) {
+function parseISO(argument, options) {
+  var _options$additionalDi;
+
   (0, _index2.default)(1, arguments);
-  var options = dirtyOptions || {};
-  var additionalDigits = options.additionalDigits == null ? 2 : (0, _index3.default)(options.additionalDigits);
+  var additionalDigits = (0, _index3.default)((_options$additionalDi = options === null || options === void 0 ? void 0 : options.additionalDigits) !== null && _options$additionalDi !== void 0 ? _options$additionalDi : 2);
 
   if (additionalDigits !== 2 && additionalDigits !== 1 && additionalDigits !== 0) {
     throw new RangeError('additionalDigits must be 0, 1 or 2');

@@ -13,8 +13,6 @@ var _index3 = _interopRequireDefault(require("../toInteger/index.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// This function will be a part of public API when UTC function will be implemented.
-// See issue: https://github.com/date-fns/date-fns/issues/376
 function setUTCISODay(dirtyDate, dirtyDay) {
   (0, _index2.default)(2, arguments);
   var day = (0, _index3.default)(dirtyDay);

@@ -17,7 +17,7 @@ import requiredArgs from "../_lib/requiredArgs/index.js";
  * @throws {TypeError} 1 argument required
  * @throws {RangeError} `date` must not be Invalid Date
  * @throws {RangeError} `options.format` must be 'extended' or 'basic'
- * @throws {RangeError} `options.represenation` must be 'date', 'time' or 'complete'
+ * @throws {RangeError} `options.representation` must be 'date', 'time' or 'complete'
  *
  * @example
  * // Represent 18 September 2019 in ISO 8601 format (local time zone is UTC):
@@ -41,6 +41,8 @@ import requiredArgs from "../_lib/requiredArgs/index.js";
  */
 
 export default function formatISO(date, options) {
+  var _options$format, _options$representati;
+
   requiredArgs(1, arguments);
   var originalDate = toDate(date);
 
@@ -48,8 +50,8 @@ export default function formatISO(date, options) {
     throw new RangeError('Invalid time value');
   }
 
-  var format = !(options !== null && options !== void 0 && options.format) ? 'extended' : String(options.format);
-  var representation = !(options !== null && options !== void 0 && options.representation) ? 'complete' : String(options.representation);
+  var format = String((_options$format = options === null || options === void 0 ? void 0 : options.format) !== null && _options$format !== void 0 ? _options$format : 'extended');
+  var representation = String((_options$representati = options === null || options === void 0 ? void 0 : options.representation) !== null && _options$representati !== void 0 ? _options$representati : 'complete');
 
   if (format !== 'extended' && format !== 'basic') {
     throw new RangeError("format must be 'extended' or 'basic'");

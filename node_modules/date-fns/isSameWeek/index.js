@@ -19,10 +19,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @description
  * Are the given dates in the same week (and month and year)?
  *
- * ### v2.0.0 breaking changes:
- *
- * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
- *
  * @param {Date|Number} dateLeft - the first date to check
  * @param {Date|Number} dateRight - the second date to check
  * @param {Object} [options] - an object with options.
@@ -34,26 +30,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @example
  * // Are 31 August 2014 and 4 September 2014 in the same week?
- * var result = isSameWeek(new Date(2014, 7, 31), new Date(2014, 8, 4))
+ * const result = isSameWeek(new Date(2014, 7, 31), new Date(2014, 8, 4))
  * //=> true
  *
  * @example
  * // If week starts with Monday,
  * // are 31 August 2014 and 4 September 2014 in the same week?
- * var result = isSameWeek(new Date(2014, 7, 31), new Date(2014, 8, 4), {
+ * const result = isSameWeek(new Date(2014, 7, 31), new Date(2014, 8, 4), {
  *   weekStartsOn: 1
  * })
  * //=> false
- * 
+ *
  * @example
  * // Are 1 January 2014 and 1 January 2015 in the same week?
- * var result = isSameWeek(new Date(2014, 0, 1), new Date(2015, 0, 1))
+ * const result = isSameWeek(new Date(2014, 0, 1), new Date(2015, 0, 1))
  * //=> false
  */
-function isSameWeek(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+function isSameWeek(dirtyDateLeft, dirtyDateRight, options) {
   (0, _index2.default)(2, arguments);
-  var dateLeftStartOfWeek = (0, _index.default)(dirtyDateLeft, dirtyOptions);
-  var dateRightStartOfWeek = (0, _index.default)(dirtyDateRight, dirtyOptions);
+  var dateLeftStartOfWeek = (0, _index.default)(dirtyDateLeft, options);
+  var dateRightStartOfWeek = (0, _index.default)(dirtyDateRight, options);
   return dateLeftStartOfWeek.getTime() === dateRightStartOfWeek.getTime();
 }
 

@@ -21,10 +21,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @description
  * Create a date from a Unix timestamp (in seconds). Decimal values will be discarded.
  *
- * ### v2.0.0 breaking changes:
- *
- * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
- *
  * @param {Number} unixTime - the given Unix timestamp (in seconds)
  * @returns {Date} the date
  * @throws {TypeError} 1 argument required

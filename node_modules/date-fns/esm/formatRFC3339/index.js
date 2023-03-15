@@ -34,7 +34,9 @@ import toInteger from "../_lib/toInteger/index.js";
  * const result = formatRFC3339(new Date(2019, 8, 18, 19, 0, 52, 234), { fractionDigits: 3 })
  * //=> '2019-09-18T19:00:52.234Z'
  */
-export default function formatRFC3339(dirtyDate, dirtyOptions) {
+export default function formatRFC3339(dirtyDate, options) {
+  var _options$fractionDigi;
+
   if (arguments.length < 1) {
     throw new TypeError("1 arguments required, but only ".concat(arguments.length, " present"));
   }
@@ -45,10 +47,7 @@ export default function formatRFC3339(dirtyDate, dirtyOptions) {
     throw new RangeError('Invalid time value');
   }
 
-  var _ref = dirtyOptions || {},
-      _ref$fractionDigits = _ref.fractionDigits,
-      fractionDigits = _ref$fractionDigits === void 0 ? 0 : _ref$fractionDigits; // Test if fractionDigits is between 0 and 3 _and_ is not NaN
-
+  var fractionDigits = Number((_options$fractionDigi = options === null || options === void 0 ? void 0 : options.fractionDigits) !== null && _options$fractionDigi !== void 0 ? _options$fractionDigi : 0); // Test if fractionDigits is between 0 and 3 _and_ is not NaN
 
   if (!(fractionDigits >= 0 && fractionDigits <= 3)) {
     throw new RangeError('fractionDigits must be between 0 and 3 inclusively');

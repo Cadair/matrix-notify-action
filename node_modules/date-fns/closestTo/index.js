@@ -19,13 +19,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @description
  * Return a date from the array closest to the given date.
  *
- * ### v2.0.0 breaking changes:
- *
- * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
- *
- * - Now, `closestTo` doesn't throw an exception
- *   when the second argument is not an array, and returns Invalid Date instead.
- *
  * @param {Date | Number} dateToCompare - the date to compare with
  * @param {Array<Date> | Array<number>} datesArray - the array to search
  * @returns {Date | undefined} the date from the array closest to the given date or undefined if no valid value is given

@@ -29,7 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @throws {TypeError} 1 argument required
  * @throws {RangeError} `date` must not be Invalid Date
  * @throws {RangeError} `options.format` must be 'extended' or 'basic'
- * @throws {RangeError} `options.represenation` must be 'date', 'time' or 'complete'
+ * @throws {RangeError} `options.representation` must be 'date', 'time' or 'complete'
  *
  * @example
  * // Represent 18 September 2019 in ISO 8601 format (local time zone is UTC):
@@ -52,6 +52,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * //=> '19:00:52Z'
  */
 function formatISO(date, options) {
+  var _options$format, _options$representati;
+
   (0, _index3.default)(1, arguments);
   var originalDate = (0, _index.default)(date);
 
@@ -59,8 +61,8 @@ function formatISO(date, options) {
     throw new RangeError('Invalid time value');
   }
 
-  var format = !(options !== null && options !== void 0 && options.format) ? 'extended' : String(options.format);
-  var representation = !(options !== null && options !== void 0 && options.representation) ? 'complete' : String(options.representation);
+  var format = String((_options$format = options === null || options === void 0 ? void 0 : options.format) !== null && _options$format !== void 0 ? _options$format : 'extended');
+  var representation = String((_options$representati = options === null || options === void 0 ? void 0 : options.representation) !== null && _options$representati !== void 0 ? _options$representati : 'complete');
 
   if (format !== 'extended' && format !== 'basic') {
     throw new RangeError("format must be 'extended' or 'basic'");
