@@ -50,11 +50,15 @@ async function generateReactions(completedJobs) {
     const unknownReact = "⚪";
     const symbols = {success: "🟢", failure: "🔴"};
 
+    // Extract some config
+    const ignorePattern = core.getInput("ignore_pattern");
+    const ignoreSuccess = core.getInput("ignore_success");
+
     const reactions = [];
+    let nSuccess = 0;
     completedJobs.map(
         (job) => {
             // If the job name matches the ignore pattern, then don't push it
-            const ignorePattern = core.getInput("ignore_pattern");
             let skip = false;
             if (ignorePattern) {
                 const re = new RegExp(ignorePattern);
@@ -70,10 +74,21 @@ async function generateReactions(completedJobs) {
                 reaction = `${reaction} ${count}`;
             }
 
+            if (job.conclusion == "success") {
+                nSuccess = nSuccess++;
+                if (ignoreSuccess) {
+                    skip = true;
+                }
+            }
+
             if (!skip) {
                 reactions.push(reaction);
             }
         });
+
+    if (ignoreSuccess) {
+        reactions.push(`${symbols.success} ${nSuccess} jobs succeeded`);
+    }
 
     return reactions;
 }
