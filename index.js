@@ -58,6 +58,7 @@ async function generateReactions(completedJobs) {
     let nSuccess = 0;
     completedJobs.map(
         (job) => {
+            core.debug(`Processing job: ${JSON.stringify(job)}`)
             // If the job name matches the ignore pattern, then don't push it
             let skip = false;
             if (ignorePattern) {
@@ -75,7 +76,8 @@ async function generateReactions(completedJobs) {
             }
 
             if (job.conclusion == "success") {
-                nSuccess = nSuccess++;
+                core.debug("Incrementing success")
+                nSuccess = nSuccess + 1;
                 if (ignoreSuccess) {
                     skip = true;
                 }
@@ -86,11 +88,40 @@ async function generateReactions(completedJobs) {
             }
         });
 
+    core.debug(`${nSuccess} jobs succeeded`);
     if (ignoreSuccess) {
-        reactions.push(`${symbols.success} ${nSuccess} jobs succeeded`);
+        reactions.push(`${symbols.success} ${nSuccess} succeeded`);
     }
 
+    core.debug(`Generated these reactions: ${reactions}`);
     return reactions;
+}
+
+async function callMatrixWithRetry(otherFunc) {
+    attempt = 1;
+    while (true) {
+        try {
+            resp = await otherFunc();
+            return resp;
+        } catch (err) {
+            if (attempt < 11 & err?.body?.errcode === 'M_LIMIT_EXCEEDED') {
+                core.debug(`$Retry attempt = ${attempt}`);
+                let retryAfterMs = attempt * attempt * 100;
+                if ("retry_after_ms" in err.body) {
+                    try {
+                        retryAfterMs = Number.parseInt(err.body.retry_after_ms, 10) * attempt;
+                    } catch (ex) {
+                        // Use default value.
+                    }
+                }
+                core.info(`Waiting ${retryAfterMs} ms before retrying`);
+                await new Promise(resolve => setTimeout(resolve, retryAfterMs));
+                attempt += 1;
+            } else {
+                throw(err);
+            }
+        }
+    }
 }
 
 async function sendMatrixNotification() {
@@ -103,12 +134,15 @@ async function sendMatrixNotification() {
     const homeserverUrl = core.getInput("homeserver");
 
     const client = new matrix.MatrixClient(homeserverUrl, matrixToken);
-    eventId = await client.sendHtmlNotice(roomId, generateNoticeHtml(status));
+    core.debug(`Sending message to room: ${roomId}`);
+    eventId = await callMatrixWithRetry(() => (client.sendHtmlNotice(roomId, generateNoticeHtml(status))));
     core.setOutput("eventId", eventId);
+    core.debug(`Sent messge, eventId=${eventId}`);
 
     for (let reaction of reactions) {
-        await new Promise(r => setTimeout(r, 1000));
-        await client.unstableApis.addReactionToEvent(roomId, eventId, reaction);
+        core.debug(`Sending reaction: ${reaction}`);
+        reactEventId = await callMatrixWithRetry(() => client.unstableApis.addReactionToEvent(roomId, eventId, reaction));
+        core.debug(`Sent reaction, eventId=${reactEventId}`);
     }
 }
 
