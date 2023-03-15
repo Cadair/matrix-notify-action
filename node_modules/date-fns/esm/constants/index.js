@@ -8,6 +8,20 @@
  */
 export var daysInWeek = 7;
 /**
+ * Days in 1 year
+ * One years equals 365.2425 days according to the formula:
+ *
+ * > Leap year occures every 4 years, except for years that are divisable by 100 and not divisable by 400.
+ * > 1 mean year = (365+1/4-1/100+1/400) days = 365.2425 days
+ *
+ * @name daysInYear
+ * @constant
+ * @type {number}
+ * @default
+ */
+
+export var daysInYear = 365.2425;
+/**
  * Maximum allowed time.
  *
  * @name maxTime
@@ -117,3 +131,53 @@ export var secondsInHour = 3600;
  */
 
 export var secondsInMinute = 60;
+/**
+ * Seconds in 1 day
+ *
+ * @name secondsInDay
+ * @constant
+ * @type {number}
+ * @default
+ */
+
+export var secondsInDay = secondsInHour * 24;
+/**
+ * Seconds in 1 week
+ *
+ * @name secondsInWeek
+ * @constant
+ * @type {number}
+ * @default
+ */
+
+export var secondsInWeek = secondsInDay * 7;
+/**
+ * Seconds in 1 year
+ *
+ * @name secondsInYear
+ * @constant
+ * @type {number}
+ * @default
+ */
+
+export var secondsInYear = secondsInDay * daysInYear;
+/**
+ * Seconds in 1 month
+ *
+ * @name secondsInMonth
+ * @constant
+ * @type {number}
+ * @default
+ */
+
+export var secondsInMonth = secondsInYear / 12;
+/**
+ * Seconds in 1 quarter
+ *
+ * @name secondsInQuarter
+ * @constant
+ * @type {number}
+ * @default
+ */
+
+export var secondsInQuarter = secondsInMonth * 3;

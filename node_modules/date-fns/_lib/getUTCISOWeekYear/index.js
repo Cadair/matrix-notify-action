@@ -13,8 +13,6 @@ var _index3 = _interopRequireDefault(require("../startOfUTCISOWeek/index.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// This function will be a part of public API when UTC function will be implemented.
-// See issue: https://github.com/date-fns/date-fns/issues/376
 function getUTCISOWeekYear(dirtyDate) {
   (0, _index2.default)(1, arguments);
   var date = (0, _index.default)(dirtyDate);

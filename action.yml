@@ -21,6 +21,10 @@ inputs:
     description: A regex to apply to reaction names to ignore certain jobs.
     required: false
     default: ''
+  ignore_success:
+    description: Only send a single summary reaction for all jobs which succeed.
+    required: false
+    default: false
 outputs:
   eventid: # id of output
     description: 'The matrix event ID of the sent message.'

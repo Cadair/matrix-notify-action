@@ -18,10 +18,6 @@ import { getRoundingMethod } from "../_lib/roundingMethods/index.js";
  * `Math.floor(differenceInHours(dateLeft, dateRight)/(7*24))|0`.
  *
  *
- * ### v2.0.0 breaking changes:
- *
- * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
- *
  * @param {Date|Number} dateLeft - the later date
  * @param {Date|Number} dateRight - the earlier date
  * @param {Object} [options] - an object with options.
