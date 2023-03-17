@@ -46,6 +46,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
+          workflow_description: "Default"
       - uses: ./
         with:
           matrix_token: ${{ secrets.matrix_access_token }}
@@ -53,6 +54,7 @@ jobs:
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
           ignore_pattern: '.*long.*'
+          workflow_description: "Ignore long"
       - uses: ./
         with:
           matrix_token: ${{ secrets.matrix_access_token }}
@@ -60,6 +62,7 @@ jobs:
           homeserver: 'https://matrix.cadair.com'
           roomid: '!vuSqbfLVzKegOeHbhL:matrix.org'
           summarise_success: true
+          workflow_description: "Summarise"
 
       - name: Print the event ID
         run: echo "Sent Matrix Event '${{ steps.message.outputs.eventId }}'"

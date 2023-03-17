@@ -69,3 +69,13 @@ This can by adding the following to the `with:` block:
 ``` yaml
 summarise_success: true
 ```
+
+### Add a workflow description to the message
+
+If you want to add a custom note about the build to the message you can add the
+following to the `with:` block:
+
+``` yaml
+workflow_description: "A passing test"
+```
+

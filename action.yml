@@ -25,6 +25,10 @@ inputs:
     description: Only send a single summary reaction for all jobs which succeed.
     required: false
     default: false
+  workflow_description:
+    description: A custom string to add to the message describing this workflow.
+    required: false
+    default: ''
 outputs:
   eventid: # id of output
     description: 'The matrix event ID of the sent message.'

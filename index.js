@@ -7,17 +7,22 @@ const util = require('node:util');
 
 function generateNoticeHtml(status) {
     const context = github.context;
+    let workflowDescription = core.getInput("workflow_description");
 
     let colour = "#ff0000";
     if (status === "Succeeded") {
         colour = "#00ff00";
     }
 
+    if (workflowDescription != '') {
+        workflowDescription = `(${workflowDescription}) `;  // note trailing space
+    }
+
     const timestamp = datefns.format(new Date(), 'yyyy-MM-dd HH:mm');
     const refName = process.env.GITHUB_REF_NAME;
     const buildUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
-    return `GitHub Actions build for ${refName} <font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
+    return `GitHub Actions build for ${refName} ${workflowDescription}<font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
 
 }
 
