@@ -47,6 +47,8 @@ The result is something which looks like this:
 Other Configuration Options
 ---------------------------
 
+### Ignore Pattern
+
 If you do not wish to post reactions for all of the jobs executed by the
 workflow you can specify a regular expression which is an ignore pattern,
 matched against the name.
@@ -55,4 +57,15 @@ To enable this add something similar to the following to the `with:` block
 
 ```yaml
 ignore_pattern: '.*long.*'
+```
+
+### Summarise Successful Jobs
+
+If you have a large build matrix, you can choose to only see the number of
+successful jobs, and just have individual reactions for jobs which did not
+conclude with success.
+This can by adding the following to the `with:` block:
+
+``` yaml
+summarise_success: true
 ```

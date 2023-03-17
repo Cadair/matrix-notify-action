@@ -56,7 +56,7 @@ async function generateReactions(completedJobs) {
 
     // Extract some config
     const ignorePattern = core.getInput("ignore_pattern");
-    const ignoreSuccess = JSON.parse(core.getInput("ignore_success"));
+    const ignoreSuccess = JSON.parse(core.getInput("summarise_success"));
     core.debug(`Got ignorePattern=${ignorePattern} and ignoreSuccess=${ignoreSuccess} ${typeof(ignoreSuccess)}`);
 
     const reactions = [];
