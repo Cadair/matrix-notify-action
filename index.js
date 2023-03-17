@@ -7,17 +7,22 @@ const util = require('node:util');
 
 function generateNoticeHtml(status) {
     const context = github.context;
+    let workflowDescription = core.getInput("workflow_description");
 
     let colour = "#ff0000";
     if (status === "Succeeded") {
         colour = "#00ff00";
     }
 
+    if (workflowDescription != '') {
+        workflowDescription = `(${workflowDescription}) `;  // note trailing space
+    }
+
     const timestamp = datefns.format(new Date(), 'yyyy-MM-dd HH:mm');
     const refName = process.env.GITHUB_REF_NAME;
     const buildUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
-    return `GitHub Actions build for ${refName} <font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
+    return `GitHub Actions build for ${refName} ${workflowDescription}<font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
 
 }
 
@@ -36,16 +41,18 @@ async function getPreviousJobs() {
     return completedJobs;
 }
 
-async function gatherPreviousJobStatus() {
+async function gatherPreviousJobStatus(completedJobs) {
+    // We calculate the job status like this and not by asking GH for the
+    // workflow status as the workflow hasn't finished yet.
+    const allConclusions = completedJobs.map(job => job.conclusion);
 
-    const githubToken = core.getInput("github_token");
-    const context = github.context;
-    const octokit = github.getOctokit(githubToken);
-
-
-    const workflow = await octokit.rest.actions.getWorkflowRun({...context.repo,
-                                                                run_id: context.runId});
-    return workflow.conclusion;
+    // We want to Succeed if there are skipped jobs and only fail if there are
+    // failed ones.
+    let status = "Failed";
+    if (allConclusions.every(conclusion => conclusion != "failure")) {
+        status = "Succeeded";
+    }
+    return status;
 }
 
 async function generateReactions(completedJobs) {
@@ -54,7 +61,8 @@ async function generateReactions(completedJobs) {
 
     // Extract some config
     const ignorePattern = core.getInput("ignore_pattern");
-    const ignoreSuccess = core.getInput("ignore_success");
+    const ignoreSuccess = JSON.parse(core.getInput("summarise_success"));
+    core.debug(`Got ignorePattern=${ignorePattern} and ignoreSuccess=${ignoreSuccess} ${typeof(ignoreSuccess)}`);
 
     const reactions = [];
     let nSuccess = 0;
@@ -78,7 +86,7 @@ async function generateReactions(completedJobs) {
             }
 
             if (job.conclusion == "success") {
-                core.debug("Incrementing success")
+                core.debug("Incrementing success");
                 nSuccess = nSuccess + 1;
                 if (ignoreSuccess) {
                     skip = true;
