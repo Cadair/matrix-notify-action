@@ -36,14 +36,16 @@ async function getPreviousJobs() {
     return completedJobs;
 }
 
-async function gatherPreviousJobStatus(completedJobs) {
-    const allConclusions = completedJobs.map(job => job.conclusion);
+async function gatherPreviousJobStatus() {
 
-    let status = "Failed";
-    if (allConclusions.every(conclusion => conclusion === "success")) {
-        status = "Succeeded";
-    }
-    return status;
+    const githubToken = core.getInput("github_token");
+    const context = github.context;
+    const octokit = github.getOctokit(githubToken);
+
+
+    const workflow = await octokit.rest.actions.getWorkflowRun({...context.repo,
+                                                                run_id: context.runId});
+    return workflow.conclusion;
 }
 
 async function generateReactions(completedJobs) {
