@@ -36,16 +36,18 @@ async function getPreviousJobs() {
     return completedJobs;
 }
 
-async function gatherPreviousJobStatus() {
+async function gatherPreviousJobStatus(completedJobs) {
+    // We calculate the job status like this and not by asking GH for the
+    // workflow status as the workflow hasn't finished yet.
+    const allConclusions = completedJobs.map(job => job.conclusion);
 
-    const githubToken = core.getInput("github_token");
-    const context = github.context;
-    const octokit = github.getOctokit(githubToken);
-
-
-    const workflow = await octokit.rest.actions.getWorkflowRun({...context.repo,
-                                                                run_id: context.runId});
-    return workflow.conclusion;
+    // We want to Succeed if there are skipped jobs and only fail if there are
+    // failed ones.
+    let status = "Failed";
+    if (allConclusions.every(conclusion => conclusion != "failure")) {
+        status = "Succeeded";
+    }
+    return status;
 }
 
 async function generateReactions(completedJobs) {
@@ -55,6 +57,7 @@ async function generateReactions(completedJobs) {
     // Extract some config
     const ignorePattern = core.getInput("ignore_pattern");
     const ignoreSuccess = core.getInput("ignore_success");
+    core.debug(`Got ignorePattern=${ignorePattern} and ignoreSuccess=${ignoreSuccess}`);
 
     const reactions = [];
     let nSuccess = 0;
@@ -81,6 +84,7 @@ async function generateReactions(completedJobs) {
                 core.debug("Incrementing success")
                 nSuccess = nSuccess + 1;
                 if (ignoreSuccess) {
+                    core.debug("Not sending this reaction")
                     skip = true;
                 }
             }
