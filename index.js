@@ -56,7 +56,7 @@ async function generateReactions(completedJobs) {
 
     // Extract some config
     const ignorePattern = core.getInput("ignore_pattern");
-    const ignoreSuccess = core.getInput("ignore_success");
+    const ignoreSuccess = JSON.parse(core.getInput("ignore_success"));
     core.debug(`Got ignorePattern=${ignorePattern} and ignoreSuccess=${ignoreSuccess} ${typeof(ignoreSuccess)}`);
 
     const reactions = [];
@@ -81,9 +81,9 @@ async function generateReactions(completedJobs) {
             }
 
             if (job.conclusion == "success") {
-                core.debug("Incrementing success")
+                core.debug("Incrementing success");
                 nSuccess = nSuccess + 1;
-                if (ignoreSuccess != "true") {
+                if (ignoreSuccess) {
                     skip = true;
                 }
             }
