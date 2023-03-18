@@ -22,7 +22,7 @@ function generateNoticeHtml(status) {
     const refName = process.env.GITHUB_REF_NAME;
     const buildUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
-    return `GitHub Actions build for ${refName} ${workflowDescription}<font color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
+    return `GitHub Actions build for ${refName} ${workflowDescription}<font color="${colour}" data-mx-color="${colour}">${status}</font> at <a href="${buildUrl}">${timestamp}</a>`;
 
 }
 
